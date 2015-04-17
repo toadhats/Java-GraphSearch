@@ -9,9 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * These driver class is used to help students to develop 
- * 
- * a program which matches the assignment requirement.
+ * These driver class is used to help students validate their input/output file
+ *
+ * and make sure that it conforms to the assignment requirements
  * 
  * Copyright reserved.
  * 
@@ -45,7 +45,7 @@ public class DriverBeta_2015 {
 		FileInputStream fstream;
 		try {
 			// Replace it by your own file path (Windows example C:\\Users\\Xuhui\\Desktop\\inputtest.txt"):
-		    fstream = new FileInputStream("C:\\Users\\Az\\Downloads\\inputBFS.txt");
+		    fstream = new FileInputStream("C:\\Users\\Az\\Downloads\\inputTest.txt");
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 			
 			String strLine;
@@ -81,16 +81,6 @@ public class DriverBeta_2015 {
 		 * STEP 3:
 		 * 
 		 * Call you own classes and functions
-		 * here:
-		 * */
-		
-		// BFS bfs = new BFS();
-		// OR
-		// AStar as = new AStar();
-		// etc.
-		
-		/**
-		 * STEP 4:
 		 * 
 		 * Generate a output file which contains the result.
 		 * 
