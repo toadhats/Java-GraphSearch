@@ -5,5 +5,5 @@ comment1.params=inputArray
 comment1.target=void\ CheckInputFileFormat(java.util.ArrayList)
 comment2.params=inputArray
 comment2.target=void\ CheckOutfileFormat(java.util.ArrayList)
-comment2.text=\ Check\ number\ of\ lines\ of\ file\ is\ 3n+1,\ where\ n\ is\ line\ 2\ of\ input\ file\r\n\ check\ format\ of\ path\ and\ of\ diagnostic\ lines\r\n
+comment2.text=\ Check\ number\ of\ lines\ of\ file\ is\ 3n+1,\ where\ n\ is\ line\ 2\ of\ input\ file\n\ check\ format\ of\ path\ and\ of\ diagnostic\ lines\n
 numComments=3

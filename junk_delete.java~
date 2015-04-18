@@ -1,0 +1,23 @@
+import java.util.*;
+/**
+ * Write a description of class junk_delete here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class junk_delete
+{
+    // instance variables - replace the example below with your own
+    private LinkedList list;
+
+    /**
+     * Constructor for objects of class junk_delete
+     */
+    public junk_delete()
+    {
+        // initialise instance variables
+        list = new LinkedList();
+        Collections.sort(list);
+    }
+
+}

@@ -96,6 +96,9 @@ public class Driver {
          // string strategy = getStrategy(inputArray[0]);
          // Only do this if i end up needing it, delete otherwise
         
+         //If we run this as-is we can test that all the validation functions are working
+         
+         
          
         // Now we're checking the output file, fingers crossed... 
         System.out.println("****************");

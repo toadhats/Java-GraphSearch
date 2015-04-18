@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.params=x\ y\ type
+comment0.target=Node(int,\ int,\ char)
+comment0.text=\n\ Constructor\ for\ objects\ of\ class\ junk_delete\n
+comment1.params=
+comment1.target=int\ getCost()
+comment1.text=\n\ Returns\ the\ cost\ to\ reach\ this\ node.\ Used\ to\ sort\ for\ UCS.\n\n\ @return\ the\ value\ of\ g\n
+comment2.params=
+comment2.target=int\ getHeuristic()
+comment2.text=\n\ Returns\ the\ value\ of\ h\ for\ a\ node\n\n\ @return\ the\ value\ of\ h\n
+comment3.params=
+comment3.target=int\ getFn()
+comment3.text=\n\ Returns\ f(n)\ \=\ g(n)\ +\ h(n),\ used\ for\ A/A*\n\n\ \n\ @return\ \ \ \ \ the\ sum\ of\ g\ and\ n\n
+comment4.params=n1\ n2
+comment4.target=int\ compare(Node,\ Node)
+comment5.params=n1\ n2
+comment5.target=int\ compare(Node,\ Node)
+numComments=6

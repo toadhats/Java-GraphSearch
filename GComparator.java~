@@ -1,0 +1,16 @@
+import java.util.Comparator;
+/**
+ * Comparator for sorting nodes by path cost (value of g)
+ * 
+ * @author (Jonathan) 
+ * @version (a version number or a date)
+ */
+public class GComparator<Node> implements Comparator<Node>
+{
+    // This should be farly straightforward...
+    public int compare(Node n1, Node n2){
+        if(n1.getCost() <  n2.getCost()) return -1;
+        if(n1.getCost() == n2.getCost()) return 0;
+        return 1;
+    }
+}
