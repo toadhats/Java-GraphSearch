@@ -28,11 +28,19 @@ public class Driver {
 
     // The number of iteration specified in the input file, for which diagnostic information should be printed:
     private int iterationNum;
+    // Making these static so they can be initialised in the main method and used in CheckOutfileFormat() later
+    static String inputFile;
+    static String outputFile;
 
     public static void main(String[] args) throws IOException {
         // Convert your input file into an array:
         ArrayList<String> inputArray = new ArrayList<String>();
-
+        // Going to work out our input and output files to save hassle later.
+        inputFile = args[0];
+        outputFile = args[1];
+        // For debug purposes mainly
+        System.out.println("Input file: " + inputFile);
+        System.out.println("Output file: " + outputFile);
         /**
          * STEP 1:
          * 
@@ -41,8 +49,7 @@ public class Driver {
          * */
         FileInputStream fstream;
         try {
-            // Replace it by your own file path (Windows example C:\\Users\\Xuhui\\Desktop\\inputtest.txt"):
-            fstream = new FileInputStream("C:\\Users\\Az\\Downloads\\inputTest.txt");
+            fstream = new FileInputStream(inputFile);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
             String strLine;
@@ -85,6 +92,12 @@ public class Driver {
          * the following code:
          * 
          * */
+         // Maybe write a method that gets the strategy out of the array, and save the strategy to a string
+         // string strategy = getStrategy(inputArray[0]);
+         // Only do this if i end up needing it, delete otherwise
+        
+         
+        // Now we're checking the output file, fingers crossed... 
         System.out.println("****************");
         System.out.println("Checking output file format...");
         CheckOutfileFormat(inputArray);
@@ -127,7 +140,7 @@ public class Driver {
 
         // Check the first line:
         Pattern pattern = Pattern.compile(singleLetterExpression);
-        Matcher matcher = pattern.matcher(inputArray.get(0));		
+        Matcher matcher = pattern.matcher(inputArray.get(0));       
         if(matcher.matches() == false)
             System.out.println("Incorrect format for first line in the input file!");
 
@@ -152,7 +165,7 @@ public class Driver {
             if(inputArray.size() != mapDimensionNum+3)
                 System.out.println("Incorrect number of total lines!");
             pattern = Pattern.compile(mapRowLettersExpression);
-        }	
+        }   
 
         int startingTileNum = 0;
         int goalTileNum = 0;
@@ -164,9 +177,9 @@ public class Driver {
             //boolean isCorrect = true;
             if(matcher.matches() == false)
             {
-                System.out.println("Incorrent map description!");
+                System.out.println("Incorrect map description!");
                 mapValid = false;
-                break;			 
+                break;           
             }
             else
             {
@@ -205,8 +218,7 @@ public class Driver {
         FileInputStream fstream;
 
         try {
-            // Replace it by your own file path (Windows example C:\\Users\\Xuhui\\Desktop\\input.txt"):
-            fstream = new FileInputStream("C:\\Users\\Az\\Downloads\\outputBFS.txt");
+            fstream = new FileInputStream(outputFile);
             BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
             String strLine;
@@ -229,7 +241,7 @@ public class Driver {
             e.printStackTrace();
         } 
 
-		
+        
         // Check whether there is empty lines in the end of the file:
         if(outputArray.get(outputArray.size()-1).trim().equals(""))
             System.out.println("Please remove the empty line in the end of output file!");
@@ -271,11 +283,11 @@ public class Driver {
         }
 
         // Prepare for regular expression matching
-        String actions = "(S)|(R)|(RD)|(D)|(LD)|(L)|(LU)|(U)|(RU)|(G)";		
+        String actions = "(S)|(R)|(RD)|(D)|(LD)|(L)|(LU)|(U)|(RU)|(G)";     
         Pattern pattern = Pattern.compile(actions);
         String splitAt = " ";  //whitespace
 
-        // Check first line of output (result and path cost):	
+        // Check first line of output (result and path cost):   
         String result = outputArray.get(0);
         //System.out.println("Path result is " + result);
         String[] tokens = result.split(splitAt); // tokenize by whitespace
@@ -306,7 +318,7 @@ public class Driver {
                 if(k.equals("S"))
                     S_num++;
                 if(k.equals("G"))
-                    G_num++;	    	    
+                    G_num++;                
             }
 
             if(S_num !=1 || G_num!=1)
@@ -316,13 +328,13 @@ public class Driver {
             //Integer cost = Integer.parseInt(tokens[1]);
             //System.out.println("cost is " + cost);
             //if(!(cost instanceof Integer)){
-            //	System.out.println("Incorrect format for first line in the input file!. Cost is not an integer.");    		
-            //	return;
+            //  System.out.println("Incorrect format for first line in the input file!. Cost is not an integer.");          
+            //  return;
             //}
 
             // Use regular expression to do this job or it will crash if the token is not a number:
             Pattern pattern1 = Pattern.compile(positiveNumExpression);
-            Matcher matcher = pattern1.matcher(tokens[1]);		
+            Matcher matcher = pattern1.matcher(tokens[1]);      
             if(matcher.matches() == false)
             {
                 System.out.println("Incorrect format for first line in the output file!. Cost is not a non-negative integer.");
@@ -354,15 +366,15 @@ public class Driver {
 
             }
 
-            //	        	Integer g=Integer.parseInt(tokens[1]); //get  g
-            //	        	Integer h=Integer.parseInt(tokens[2]); //get  h
-            //	        	Integer f=Integer.parseInt(tokens[3]); //get  f
-            //        		System.out.println("f,g,h is: " + g + " " + h + " " + f);
+            //              Integer g=Integer.parseInt(tokens[1]); //get  g
+            //              Integer h=Integer.parseInt(tokens[2]); //get  h
+            //              Integer f=Integer.parseInt(tokens[3]); //get  f
+            //              System.out.println("f,g,h is: " + g + " " + h + " " + f);
             //
-            //            	if(!(g instanceof Integer) || !(h instanceof Integer) || !(f instanceof Integer)){
-            //        			System.out.println("Incorrect format for first line in the input file!. Cost is not an integer.");    		
-            //        			return;
-            //            	}
+            //              if(!(g instanceof Integer) || !(h instanceof Integer) || !(f instanceof Integer)){
+            //                  System.out.println("Incorrect format for first line in the input file!. Cost is not an integer.");          
+            //                  return;
+            //              }
 
             // Use regular expression to do this job or it will crash if the token is not a number:
             Pattern pattern1 = Pattern.compile(positiveNumExpression);
@@ -428,7 +440,7 @@ public class Driver {
             //return isCorrect;
         }
     }
-
+    // Why is this here?
     /*
     private boolean checkPathActions(ArrayList<String> actionList, Pattern pattern){
 
@@ -439,7 +451,7 @@ public class Driver {
     Matcher matcher = pattern.matcher(k);
     if(matcher.matches() == false)
     System.out.println("Incorrect format for second line in the input file!");
-    trueActionList = false;		
+    trueActionList = false;     
     }
 
     return trueActionList;
