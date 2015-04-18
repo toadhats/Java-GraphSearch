@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=size
+comment0.target=Graph(int)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Graph\r\n
+comment1.params=coords
+comment1.target=Node\ getNode(java.lang.String)
+comment1.text=\r\n\ Retrieves\ a\ node\ from\ the\ graph\ by\ key.\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment2.params=coords\ node
+comment2.target=void\ putNode(java.lang.String,\ Node)
+comment2.text=\r\n\ Puts\ a\ Node\ into\ the\ Graph\r\n\r\n\ @param\ \ coords\ \ \ A\ String\ containing\ coordinates,\ used\ as\ the\ identifier\ for\ the\ node.\r\n
+comment3.params=
+comment3.target=int\ getGridSize()
+comment3.text=\r\n\ Returns\ the\ side\ length\ of\ the\ graph.\ We\ need\ this,\ I\ think.\r\n\r\n\ @return\ \ \ \ \ the\ length\ of\ a\ side\r\n
+comment4.params=input
+comment4.target=void\ loadGraph(java.util.ArrayList)
+comment4.text=\r\n\ Loads\ from\ an\ input\ array\ into\ a\ graph\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+numComments=5

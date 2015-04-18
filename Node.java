@@ -73,6 +73,20 @@ public class Node
         return g + h;
     }
 
+    /**
+     * Returns a String representation of the Node's x and y coordinates
+     * e.g "1,1"
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public String getCoords()
+    {
+        String coords = coordX + "," + coordY;
+        return coords;
+    }
+
+    
     
     // Inner classes seem to screw up BlueJ formatting, 
     // so I put them down here so I don't have to look at them too much.

@@ -91,12 +91,16 @@ public class Driver {
          * 
          * the following code:
          * 
-         * */
+         */
          // Maybe write a method that gets the strategy out of the array, and save the strategy to a string
-         // string strategy = getStrategy(inputArray[0]);
+         // string strategy = getStrategy(inputArray.get(2));
          // Only do this if i end up needing it, delete otherwise
         
-         //If we run this as-is we can test that all the validation functions are working
+         //Loading the grid from the input...
+         int graphSize = Integer.parseInt(inputArray.get(2));
+         Graph graph = new Graph(graphSize);
+         graph.loadGraph(inputArray);
+
          
          
          
@@ -106,6 +110,15 @@ public class Driver {
         CheckOutfileFormat(inputArray);
 
     }
+    
+    
+
+    
+    /**************************************
+     * File checking functions start here *
+     **************************************/
+     
+     
     // The function to check format of input file:
     private static void CheckInputFileFormat(ArrayList<String> inputArray)
     {
@@ -345,7 +358,7 @@ public class Driver {
             }
         }
 
-        //******************************
+        ////******************************
 
         // For search methods B, D, U, A
         int i = 1;
