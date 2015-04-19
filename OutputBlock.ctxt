@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=strategy\ debugIterations\ mapSize
+comment0.target=OutputBlock(java.lang.String,\ int,\ int)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ OutputBlock\r\n
+comment1.params=
+comment1.target=java.lang.String\ getPath()
+comment1.text=\r\n\ Gets\ the\ path\ we\ stored\ here.\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment2.params=
+comment2.target=java.util.ArrayList\ getDiagBlocks()
+comment2.text=\r\n\ Gets\ the\ diag\ blocks\ out\ ready\ to\ be\ printed\ to\ the\ output\ file.\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+numComments=3

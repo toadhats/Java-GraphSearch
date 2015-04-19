@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * */
 
 public class Driver {
-
+    public static boolean verboseMode = false; // Toggles between full and partial output.
     // The number of iteration specified in the input file, for which diagnostic information should be printed:
     private int iterationNum;
     // Making these static so they can be initialised in the main method and used in CheckOutfileFormat() later
@@ -93,17 +93,18 @@ public class Driver {
          * 
          */
          // Maybe write a method that gets the strategy out of the array, and save the strategy to a string
-         // string strategy = getStrategy(inputArray.get(2));
+         String strategy = inputArray.get(2);
          // Only do this if i end up needing it, delete otherwise
         
          //Loading the grid from the input...
          int graphSize = Integer.parseInt(inputArray.get(2));
          Graph graph = new Graph(graphSize);
          graph.loadGraph(inputArray);
-
-         
-         
-         
+         graph.buildEdges();
+         //Search search = new Search(strategy, iterationNum, graph);
+        //OutputBlock output = search.run();
+        
+        //writeOutput(output);
         // Now we're checking the output file, fingers crossed... 
         System.out.println("****************");
         System.out.println("Checking output file format...");
@@ -111,7 +112,30 @@ public class Driver {
 
     }
     
+    /**
+     * Writes an output block to file
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void writeOutput(OutputBlock output)
+    {
+        // put your code here
+
+    }
+
     
+    /**
+     * Tells if we're running in verbose mode or not
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public static boolean verbose()
+    {
+        // put your code here
+        return verboseMode;
+    }
 
     
     /**************************************

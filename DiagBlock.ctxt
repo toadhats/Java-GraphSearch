@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=
+comment0.target=DiagBlock()
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ DiagBlock\r\n
+comment1.params=
+comment1.target=java.lang.String\ toString()
+comment1.text=\r\n\ Returns\ a\ multi-line\ string,\ which\ is\ a\ full\ 3\ line\ diagnostic\ block.\r\n\r\n\ @return\ \ \ \ \ A\ diagnostic\ block\ as\ a\ string.\r\n
+numComments=2

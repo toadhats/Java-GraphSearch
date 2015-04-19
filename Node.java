@@ -14,7 +14,6 @@ public class Node
     private int coordY; //The y-coordinate of this node
     // We need the coordinates to work out our heuristic, 
     // and also to work out which directions will have a neighbour.
-    private static final String[] directions = {"R", "RD", "D", "LD", "L", "LU", "U", "RU"}; // putting this here for now
     /**
      * Constructor for objects of class Node
      */
@@ -27,6 +26,18 @@ public class Node
         coordX = x;
         coordY = y;
         nodeType = type;
+    }
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public char getNodeType()
+    {
+        // put your code here
+        return nodeType;
     }
 
     /**
@@ -84,6 +95,28 @@ public class Node
         return coords;
     }
 
+    /**
+     * Returns the node's x coordinate as an int
+     *
+     * @return     the x coord
+     */
+    public int getX()
+    {
+        // put your code here
+        return coordX;
+    }
+    
+    /**
+     * Returns the node's y coordinate as an int
+     *
+     * @return     the y coord
+     */
+    public int getY()
+    {
+        // put your code here
+        return coordY;
+    }
+    
     /**
      * Adds an Edge to a Node object
      *

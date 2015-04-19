@@ -1,10 +1,16 @@
 #BlueJ class context
 comment0.params=args
 comment0.target=void\ main(java.lang.String[])
-comment1.params=inputArray
-comment1.target=void\ CheckInputFileFormat(java.util.ArrayList)
-comment1.text=\r\n\ File\ checking\ functions\ start\ here\ *\r\n
-comment2.params=inputArray
-comment2.target=void\ CheckOutfileFormat(java.util.ArrayList)
-comment2.text=\ Check\ number\ of\ lines\ of\ file\ is\ 3n+1,\ where\ n\ is\ line\ 2\ of\ input\ file\r\n\ check\ format\ of\ path\ and\ of\ diagnostic\ lines\r\n
-numComments=3
+comment1.params=output
+comment1.target=void\ writeOutput(OutputBlock)
+comment1.text=\r\n\ Writes\ an\ output\ block\ to\ file\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment2.params=
+comment2.target=boolean\ verbose()
+comment2.text=\r\n\ Tells\ if\ we're\ running\ in\ verbose\ mode\ or\ not\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment3.params=inputArray
+comment3.target=void\ CheckInputFileFormat(java.util.ArrayList)
+comment3.text=\r\n\ File\ checking\ functions\ start\ here\ *\r\n
+comment4.params=inputArray
+comment4.target=void\ CheckOutfileFormat(java.util.ArrayList)
+comment4.text=\ Check\ number\ of\ lines\ of\ file\ is\ 3n+1,\ where\ n\ is\ line\ 2\ of\ input\ file\r\n\ check\ format\ of\ path\ and\ of\ diagnostic\ lines\r\n
+numComments=5
