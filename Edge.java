@@ -34,12 +34,13 @@ public class Edge
      *
      * @return     the value of cost (int)
      */
-    public int getCost()
+    public int getEdgeCost()
     {
         // put your code here
         return cost;
     }
-
+
+
     /**
      * Returns the direction of an Edge, used when putting edges into Nodes
      *

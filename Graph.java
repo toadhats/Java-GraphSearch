@@ -195,4 +195,25 @@ public class Graph
         long processTime = (endTime - startTime);
         System.out.println("Found " + edgeCount + " edges. (" + processTime + "ms)");
     }
+    
+    
+    
+    /**
+     * Finds and returns the start node.
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public Node findStart()
+    {
+        // put your code here
+        Node startNode = null; // I know this is bad but i'm tired ok.
+        for (Node node: nodes.values())
+        {
+            if (node.getNodeType() == 'S') {
+                startNode = node;}
+            
+        }
+        return startNode;
+    }
 }
