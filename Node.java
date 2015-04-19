@@ -1,15 +1,12 @@
 import java.util.*;
 /**
- * Write a description of class junk_delete here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * An object representing a node on the graph
  */
 public class Node
 {
     // instance variables - replace the example below with your own
     private char nodeType; //This specifies that the node is either S, G, R or X
-    private ArrayList edges; //An array of all the neighbours of this node
+    private Map<String, Edge> edges; //An array of all the neighbours of this node
     private int g; //The cost to reach this node
     private int h; //The heuristic from this node
     private String path; //The path used to get here, used for diagnostic output
@@ -17,13 +14,14 @@ public class Node
     private int coordY; //The y-coordinate of this node
     // We need the coordinates to work out our heuristic, 
     // and also to work out which directions will have a neighbour.
-
+    private static final String[] directions = {"R", "RD", "D", "LD", "L", "LU", "U", "RU"}; // putting this here for now
     /**
-     * Constructor for objects of class junk_delete
+     * Constructor for objects of class Node
      */
     public Node(int x, int y, char type)
     {
         // initialise instance variables
+        edges = new HashMap<String, Edge>();
         path = ""; //No path yet, initialising this for safety.
         //edges = //we can work out the edges basde on the coordinates. Somehow...
         coordX = x;
@@ -86,7 +84,18 @@ public class Node
         return coords;
     }
 
-    
+    /**
+     * Adds an Edge to a Node object
+     *
+     */
+    public void addEdge(Edge newEdge)
+    {
+        // There are probably many better ways to do this.
+        String newDirection = newEdge.getDirection();
+        edges.put(newDirection, newEdge);
+        
+    }
+
     
     // Inner classes seem to screw up BlueJ formatting, 
     // so I put them down here so I don't have to look at them too much.
