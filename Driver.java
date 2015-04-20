@@ -101,6 +101,7 @@ public class Driver {
          Graph graph = new Graph(graphSize);
          graph.loadGraph(inputArray);
          graph.buildEdges();
+         graph.computeHeuristics();
          Search search = new Search(strategy, iterationNum, graph);
          OutputBlock output = search.run();
         

@@ -29,6 +29,18 @@ public class OutputBlock
         // put your code here
         return path;
     }
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void setPath(String finalPath)
+    {
+        // put your code here
+        path = finalPath;
+    }
 
     /**
      * Gets the diag blocks out ready to be printed to the output file.
@@ -44,6 +56,16 @@ public class OutputBlock
             temp.add(block.toString());
         }
         return temp;
+    }
+
+    /**
+     * Adds a diag blod to the output block
+     *
+     * @param  db   a diag block
+     */
+    public void addDiagBlock(DiagBlock db)
+    {
+        diagBlocks.add(db);
     }
 
     

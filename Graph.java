@@ -46,7 +46,7 @@ public class Graph
         nodes.put(coords, node);
         //Debug output
         if (Driver.verbose()){
-        System.out.println("Put new node at (" + coords + ")");}
+            System.out.println("Put new node at (" + coords + ")");}
     }
 
     /**
@@ -96,7 +96,8 @@ public class Graph
     }
 
     /**
-     * Looks at the coordinates of each node to work out what its edges are and where they go to.
+     * Looks at the coordinates of each node to work out what its edges are and where they go to. 
+     * If an edge leads to a mountain, don't make the link, and don't make the corresponding diagonals
      *
      */
     public void buildEdges()
@@ -108,8 +109,10 @@ public class Graph
         for (Node node: nodes.values() )
         {
             Set<String> dirs = new TreeSet<String>(Arrays.asList(new String[]{"R", "RD", "D", "LD", "L", "LU", "U", "RU"})); 
+
             int x = node.getX();
             int y = node.getY();
+
             // now we know where this node is.
 
             Set<String> blockedDirs = new TreeSet<String>();
@@ -137,7 +140,7 @@ public class Graph
                 }
             }
             dirs.removeAll(blockedDirs);
-            // Now we have the list of valid directions.
+            // Now we have the list of theoretically valid directions, without considering mountains.
             // We're going to loop through them all, see where they go, make an edge for each, put the edge into the node.
             for (String dir:dirs)
             {
@@ -170,7 +173,7 @@ public class Graph
                     break;
                     case "RU":
                     targetX++;
-                    targetY++;
+                    targetY--;
                     break;
                     default:
                     System.err.println("Got an invalid direction while building edges. Something went very wrong.");
@@ -179,15 +182,50 @@ public class Graph
                 //Turning the target coordinates we got into a string
                 String targetCoords = targetX + "," + targetY;
                 //Using that string to pull our target node out of the grid to pass to the edge
-                Edge newEdge = new Edge(dir, nodes.get(targetCoords));
-                node.addEdge(newEdge);
-                if (Driver.verbose()){
-                System.out.println("(" + node.getCoords() + "): New edge has been added to the " + dir + " leading to (" + targetCoords + ")" );}
-                edgeCount++;
+                //Need to find out if it leads to a mountain.
+                if (nodes.get(targetCoords).getNodeType() == 'X')
+                {
+                    if (Driver.verbose()) {System.out.println("Found a mountain to the " + dir + "! Can't go this way.");}
+                    if (Edge.CARDINALS.contains(dir)) 
+                    {
+                        blockedDirs.add(dir);
+                        if (Driver.verbose()) {System.out.println("Banned " + dir + " because it's a mountain.");}
+                        //banning the diagnonals beside this mountain
+                        if (dir == "U" || dir == "D")
+                        {
+                            if ((blockedDirs.add("L"+dir)) && (Driver.verbose())) {System.out.println("Banned " + "L" + dir + " because of the nearby mountain");}
+                            if ((blockedDirs.add("R"+dir)) && (Driver.verbose())) {System.out.println("Banned " + "R" + dir + " because of the nearby mountain");}
+                        }
+                        else
+                        {
+                            if ((blockedDirs.add(dir+"U")) && (Driver.verbose())) {System.out.println("Banned " +  dir + "U" + " because of the nearby mountain");}
+                            if ((blockedDirs.add(dir+"D")) && (Driver.verbose())) {System.out.println("Banned " +  dir + "D" + " because of the nearby mountain");}
+                        }
+
+                    }
+                }
+                else 
+                {
+                    if (!blockedDirs.contains(dir))
+                    {
+                        Edge newEdge = new Edge(dir, nodes.get(targetCoords));
+                        node.addEdge(newEdge);
+                        if (Driver.verbose()){
+                            System.out.println("(" + node.getCoords() + "): New edge has been added to the " + dir + " leading to (" + targetCoords + ")" );}
+                        edgeCount++;
+                    }
+                }
+                // If the node wasn't a mountain, and wasn't next to a mountain, we added it.
             }
             // When we get to here we should have added all the edges for this node
-            if (Driver.verbose()){
-            System.out.println("(" + node.getCoords() + "): =======> All edges for this node added.");}
+            // But I want to make sure any banned directions are deleted.
+            for (String banned: blockedDirs)
+            {
+                node.removeEdge(banned);
+                if (Driver.verbose()) { System.out.println("Removed edge " + banned + " because a mountain got in the way.");}
+            }
+            if (Driver.verbose()) { System.out.println("(" + node.getCoords() + "): =======> All edges for this node added.");}
+
         }
         //When we get to here we should have processed all the nodes.
         System.out.println("### All nodes have been processed! ###");
@@ -195,9 +233,7 @@ public class Graph
         long processTime = (endTime - startTime);
         System.out.println("Found " + edgeCount + " edges. (" + processTime + "ms)");
     }
-    
-    
-    
+
     /**
      * Finds and returns the start node.
      *
@@ -210,10 +246,56 @@ public class Graph
         Node startNode = null; // I know this is bad but i'm tired ok.
         for (Node node: nodes.values())
         {
-            if (node.getNodeType() == 'S') {
-                startNode = node;}
-            
+            if (node.getNodeType() == 'S') 
+            {
+                startNode = node;
+            }
+
         }
         return startNode;
     }
+    
+        /**
+     * Finds and returns the goal node.
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public Node findGoal()
+    {
+        // put your code here
+        Node goalNode = null; // I know this is bad but i'm tired ok.
+        for (Node node: nodes.values())
+        {
+            if (node.getNodeType() == 'G') 
+            {
+                goalNode = node;
+            }
+
+        }
+        return goalNode;
+    }
+    
+    /**
+     * Computes the value of h for every node.
+     *
+     */
+    public void computeHeuristics()
+    {
+        // First we need coordinates of the goal
+        int goalX = findGoal().getX();
+        int goalY = findGoal().getY();
+        
+        
+        for (Node node: nodes.values())
+        {
+            int hDiag = Math.min(Math.abs(node.getX() - goalX), Math.abs(node.getY() - goalY));
+            int hCard = (Math.abs(node.getX() - goalX) + Math.abs(node.getY() - goalY));
+            int h = (hDiag +  (2 * hCard) - (2 * hDiag));
+            node.setHeuristic(h);
+            if (Driver.verbose()) { System.out.println("Heuristic for node (" + node.getCoords() + ") is " + h);}
+        }
+        
+    }
+
 }

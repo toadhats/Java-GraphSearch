@@ -5,15 +5,17 @@ import java.util.*;
 public class Node
 {
     // instance variables - replace the example below with your own
-    private char nodeType; //This specifies that the node is either S, G, R or X
-    private LinkedHashMap<String, Edge> edges; //An array of all the neighbours of this node
-    private int g; //The cost to reach this node
-    private int h; //The heuristic from this node
-    private String path; //The path used to get here, used for diagnostic output
-    private int coordX; //The x-coordinate of this node
-    private int coordY; //The y-coordinate of this node
+    private char nodeType; // This specifies that the node is either S, G, R or X
+    private LinkedHashMap<String, Edge> edges; // An array of all the neighbours of this node
+    private int g; // The cost to reach this node
+    private int realCost; // The actual cost to move to this square from start, needed because BFS/DFS don't track cost.
+    private int h; // The heuristic from this node
+    private String cameFrom; // The coordinates of the node we got here from.
+    private String path; // The full path to this node
+    private int coordX; // The x-coordinate of this node
+    private int coordY; // The y-coordinate of this node
     // We need the coordinates to work out our heuristic, 
-    // and also to work out which directions will have a neighbour.
+    // and alsz`o to work out which directions will have a neighbour.
     /**
      * Constructor for objects of class Node
      */
@@ -21,7 +23,7 @@ public class Node
     {
         // initialise instance variables
         edges = new LinkedHashMap<String, Edge>();
-        path = ""; //No path yet, initialising this for safety.
+        cameFrom = ""; //No path yet, initialising this for safety.
         //edges = //we can work out the edges basde on the coordinates. Somehow...
         coordX = x;
         coordY = y;
@@ -29,7 +31,8 @@ public class Node
 
         if (nodeType == 'S') {
             g = 0; // We'll put this here because we can, and it saves logic later
-            path = "S"; // Because we can.
+            cameFrom = ""; // Nowhere.
+            path = "S";
         }
         else if (nodeType == 'G') {
             h = 0;
@@ -37,7 +40,7 @@ public class Node
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Gets the type of the node
      *
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y
@@ -74,7 +77,37 @@ public class Node
         g = newCost;
     }
 
-    
+    /**
+     * Gets the real cost of getting here from start, accounting for movement
+     *
+     * @return     the movement cost to get here from the start.
+     */
+    public int getRealCost()
+    {
+        // put your code here
+        return realCost;
+    }
+
+    /**
+     * Sets the real cost to get here from start
+     *
+     * @param  newCost   cost to get here
+     */
+    public void setRealCost(int newCost)
+    {
+        realCost = newCost;
+    }
+
+    /**
+     * Sets the value of h for the node
+     *
+     * @param  heuristic    The new heuristic
+     */
+    public void setHeuristic(int heuristic)
+    {
+        h = heuristic;
+    }
+
     /**
      * Returns the value of h for a node
      *
@@ -138,14 +171,49 @@ public class Node
     }
 
     /**
-     * Gets the path associated with this node.
+     * Tells this node how we got to it
      *
-     * @return     A string containing the path to this node.
+     * @param  parent Coordinates of parent node.
+     */
+    public void cameFrom(String parent)
+    {
+        cameFrom = parent;
+    }
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void setPath(String newPath)
+    {
+        // put your code here
+        path = newPath;
+    }
+
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
      */
     public String getPath()
     {
         // put your code here
         return path;
+    }
+
+    
+    /**
+     * Gets the node we used to get to this one.
+     *
+     * @return     A string containing the node before this one in the path.
+     */
+    public String getCameFrom()
+    {
+        // put your code here
+        return cameFrom;
     }
 
     /**
@@ -172,6 +240,19 @@ public class Node
 
     }
 
+    /**
+     * Removes an edge, i.e if we discovered a mountain blocking it.
+     *
+     * @param  k   direction (key) of the edge to delete
+     * @return     the sum of x and y
+     */
+    public void removeEdge(String k)
+    {
+        // put your code here
+        edges.remove(k);
+    }
+
+    
     // Inner classes seem to screw up BlueJ formatting, 
     // so I put them down here so I don't have to look at them too much.
 

@@ -18,7 +18,19 @@ public class DiagBlock
         diagLines = new ArrayList<String>(3);
         
     }
-    
+    
+    /**
+     * An example of a method - replace this comment with your own
+     *
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y
+     */
+    public void addLine(String line)
+    {
+        diagLines.add(line);
+    }
+
+
     /**
      * Returns a multi-line string, which is a full 3 line diagnostic block.
      *

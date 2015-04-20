@@ -6,7 +6,7 @@ import java.util.*;
  */
 public class Edge
 {
-    private static final Set<String> CARDINALS = new HashSet<String>(Arrays.asList(new String[]{"R", "D", "L", "U"})); // Seems like the best way to decide the cost....
+    public static final Set<String> CARDINALS = new HashSet<String>(Arrays.asList(new String[]{"R", "D", "L", "U"})); // Seems like the best way to decide the cost....
     //private static final Set<String> DIAGONALS = new HashSet<String>(Arrays.asList(new String[]{"RD", "LD", "LU", "RU"})); // I only really need one of these but I'm keeping both for now
     private int cost; //The cost of moving along this edge to the neighbour, either 1 or 2
     private String direction; // the direction of the edge, might not need this since it's also used as the key for this Edge in the map

@@ -2,7 +2,10 @@
 comment0.params=
 comment0.target=DiagBlock()
 comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ DiagBlock\r\n
-comment1.params=
-comment1.target=java.lang.String\ toString()
-comment1.text=\r\n\ Returns\ a\ multi-line\ string,\ which\ is\ a\ full\ 3\ line\ diagnostic\ block.\r\n\r\n\ @return\ \ \ \ \ A\ diagnostic\ block\ as\ a\ string.\r\n
-numComments=2
+comment1.params=line
+comment1.target=void\ addLine(java.lang.String)
+comment1.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment2.params=
+comment2.target=java.lang.String\ toString()
+comment2.text=\r\n\ Returns\ a\ multi-line\ string,\ which\ is\ a\ full\ 3\ line\ diagnostic\ block.\r\n\r\n\ @return\ \ \ \ \ A\ diagnostic\ block\ as\ a\ string.\r\n
+numComments=3

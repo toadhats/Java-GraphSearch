@@ -9,12 +9,16 @@ public class Search
     // instance variables - replace the example below with your own
     private String strategy;
     private int diagIterations;
+    private int currentIterations;
     private Graph graph;
     private LinkedList<Node> open;
     private Set<Node> closed;
     private OutputBlock output;
+    private List<DiagBlock> diagQueue;
     private String position; // We keep track of where we are via the coordinates.
-    private String pathToHere; // This changes every time we 'move' i.e. expand a node. Used to print diag.
+    private String oldPosition; // Stores the last place we were at, 
+    private String path; // The final path.
+    //private int realPathCost; // The real cost of the path so far, including cardinal movement penalty
     private String goalNode; // Coordinates of the goal node, used to calculate heuristic.
 
     /**
@@ -25,12 +29,14 @@ public class Search
         // initialise instance variables
         strategy = strat;
         diagIterations = iterations;
+        currentIterations = 0;
         graph = newGraph;
         open = new LinkedList<Node>();
         closed = new LinkedHashSet<Node>();
         output = new OutputBlock(strategy, diagIterations, graph.getGridSize());
+        diagQueue = new LinkedList<DiagBlock>();
         position = graph.findStart().getCoords();
-        pathToHere = "S";
+        //path = new StringBuilder("S");
 
         // We can add the starting node to the open set now.
         open.add(graph.findStart());
@@ -45,8 +51,7 @@ public class Search
     public OutputBlock run()
     {
         long startTime = System.currentTimeMillis();
-        // This is mainly to make sure we made it this far
-
+        boolean diag = false; // We'll flip this back if we need to.
         switch (strategy)
         {
             case "D": System.out.println("Initiating Depth-First search..."); break;
@@ -59,13 +64,43 @@ public class Search
         // We want to run until we're done
         while (!finished)
         {
+            // Time to expand the node we've chosen (or started at)
+            currentIterations++; // Increment iterations
+            // Checking if we need diagnostics
+            if (currentIterations <= diagIterations) {diag = true;} 
+            else {diag = false;}
+
             Node n = graph.getNode(position);
-            if (Driver.verbose()) {
+
+            if (Driver.verbose()) 
+            {
                 System.out.println("# Looking at node (" + n.getCoords() + ") #");
                 System.out.println("Type: " + n.getNodeType() + " | g: " + n.getCost() + " | h: " 
-                    + n.getHeuristic() + " | f: " + n.getFn() );
+                    + n.getHeuristic() + " | f: " + n.getFn() + " | Parent: (" + n.getCameFrom() + ")\n"
+                    + "Path: " + n.getPath());
             }
 
+            // If we need diagnostics prepare a block
+            if (diag) 
+            {
+                DiagBlock thisDiag = new DiagBlock();
+                thisDiag.addLine(n.getPath() + " " + n.getCost() + " " + n.getHeuristic() + " " + n.getFn());
+                StringBuilder sb1 = new StringBuilder();
+                sb1.append("OPEN");
+                for (Node diagOpenNode: open)
+                {
+                    sb1.append(" " + diagOpenNode.getPath());
+                }
+                thisDiag.addLine(sb1.toString());
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append("CLOSED");
+                for (Node diagClosedNode: closed)
+                {
+                    sb2.append(" " + diagClosedNode.getPath());
+                }
+                thisDiag.addLine(sb2.toString());
+                diagQueue.add(thisDiag);
+            }
             // Grabbing neighbours
             LinkedHashMap<String,Edge> neighbours = n.getEdges();
 
@@ -75,7 +110,12 @@ public class Search
                 // If we were using BFS or DFS we won't get here, because those strategies finish when they 
                 // see the goal, not when they select it for expansion.
                 System.out.println("Found the goal node at position (" + n.getCoords() + ")");
+
                 finished = true;
+                path = n.getPath() + "-G " + n.getRealCost();
+                if (Driver.verbose()){System.out.println("Final path: " + path);}
+                output.setPath(path);
+                //PUT THE PATH INTO THE OUTPUT BLOCK
             }
             else 
             {
@@ -88,32 +128,61 @@ public class Search
                 for (Edge neighbour: neighbours.values())
                 {
                     // Checking if this neighbour is already in the closed set.
-                    if (!closed.contains(neighbour.getDest())) {
+                    if (!(closed.contains(neighbour.getDest()) || open.contains(neighbour.getDest()))) 
+                    {
                         // It's not in the closed set.
+
+                        if (Driver.verbose()) {
+                            System.out.println("--> Looking at neighbour (" + neighbour.getDest().getCoords() + ")");}
+                        neighbour.getDest().cameFrom(position);
+                        neighbour.getDest().setPath(n.getPath() + "-" + neighbour.getDirection());
+                        neighbour.getDest().setRealCost(n.getRealCost() + neighbour.getEdgeCost());
+                        
+
                         switch (strategy)
                         {
                             case "B":
                             case "D":
-                            neighbour.getDest().setCost(1);
+                            neighbour.getDest().setCost(n.getCost() + 1);
                             break;
                             case "U":
                             case "A":
-                            neighbour.getDest().setCost(n.getCost() + neighbour.getEdgeCost());
+                            neighbour.getDest().setCost(n.getCost() + neighbour.getEdgeCost()); 
+                            break;
+                            default:
+                            System.err.println("Something has gone terribly wrong with the strategy again."); break;
                         }
                         // We've given it a cost based on the strategy we're using, now we add it to the open set.
                         open.addLast(neighbour.getDest());
+                        //Maybe we found the goal, we can do this in BFS and DFS
+                        if (((strategy == "B") || (strategy == "D")) && (neighbour.getDest().getNodeType() == 'G'))
+                        {
+                            // If we see the goal while doing BFS or DFS, we end here
+                            System.out.println("Found the goal node while looking at neighbour (" + n.getCoords() + ")");
+
+                            finished = true;
+                            path = neighbour.getDest().getPath() + "-G " + n.getRealCost();
+                            if (Driver.verbose()){System.out.println("Final path: " + path);}
+                            output.setPath(path);
+                            //PUT THE PATH INTO THE OUTPUT BLOCK
+                        }
                     }
 
                 }
                 // Done adding neighbours to the open set
             }
             // Done with this node
-            selectNextNode();
+            if (!finished){ selectNextNode();}
+
         }
         // And we're done, returning the output block now.
         long endTime = System.currentTimeMillis();
         long processTime = (endTime - startTime);
         System.out.println("Took " + processTime + "ms");
+        for (DiagBlock db: diagQueue)
+        {
+            output.addDiagBlock(db);
+        }
         return output;
     }
 
@@ -143,6 +212,7 @@ public class Search
             break;
             default: System.out.println("Search strategy not available, something broke."); nextNode = null; break;
         }
+        oldPosition = position;
         position = nextNode.getCoords();
         // When this is called, the pathfinding loop will repeat with a new position.
     }
