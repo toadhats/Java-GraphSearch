@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -23,10 +25,8 @@ import java.util.regex.Pattern;
  */
 
 public class Driver {
-  public static boolean verboseMode = true; // Toggles between full and partial output.
-  // The number of iteration specified in the input file, for which diagnostic information should be
-  // printed:
-  private static int iterationNum;
+  public static boolean verboseMode = false; // Toggles between full and partial output.
+  private static int diagIterations; // The number of diagnostic iterations specified
   // Making these static so they can be initialised in the main method and used in
   // CheckOutfileFormat() later
   static String inputFile;
@@ -38,7 +38,6 @@ public class Driver {
     // Going to work out our input and output files to save hassle later.
     inputFile = args[0];
     outputFile = args[1];
-    // For debug purposes mainly
     System.out.println("Input file: " + inputFile);
     System.out.println("Output file: " + outputFile);
     /*
@@ -89,10 +88,11 @@ public class Driver {
      * 
      * the following code:
      */
-    // Maybe write a method that gets the strategy out of the array, and save the strategy to a
-    // string
+    // Get the strategy we're going to use
     final String strategy = inputArray.get(0);
-    // Only do this if i end up needing it, delete otherwise
+//    Get the number of iterations we want diagnostic info for
+    diagIterations = Integer.parseInt(inputArray.get(1));
+
 
     // Loading the grid from the input...
     final int graphSize = Integer.parseInt(inputArray.get(2));
@@ -100,7 +100,7 @@ public class Driver {
     graph.loadGraph(inputArray);
     graph.buildEdges();
     graph.computeHeuristics();
-    final Search search = new Search(strategy, iterationNum, graph);
+    final Search search = new Search(strategy, diagIterations, graph);
     final OutputBlock output = search.run();
 
     writeOutput(output);
@@ -118,6 +118,30 @@ public class Driver {
    */
   public static void writeOutput(final OutputBlock output) {
     // put your code here
+	  try {
+		BufferedWriter writer = new BufferedWriter( new FileWriter( outputFile));
+		  
+		  // Writing the path to the first line.
+		  writer.write( output.getPath());
+		  writer.write("\n");
+		  
+		  
+		  // Getting all the diag blocks...
+		  for (String block: output.getDiagBlocks()) {
+			  
+			  writer.write(block);
+			  
+		  }
+		  if (Driver.verbose()){
+			  System.out.println("Wrote " + output.getDiagBlocks().size() + " diag blocks to file.");
+		  }
+		  // Now we close the writer, and we're done.
+		  writer.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	  // Ready for checking methods now
 
   }
 
@@ -449,29 +473,28 @@ public class Driver {
 
       }
 
-      // Part 3 Closed List
-      i = i + 1;
-      final String closedLine = outputArray.get(i); // get line with e.g. OPEN f
+    //Part 3 Closed List
+		i=i+1; 
+		String closedLine=outputArray.get(i); // get line with e.g. OPEN f
       tokens = closedLine.split(splitAt);
       System.out.println("closed is " + tokens[0]);
-      if (!tokens[0].equals("CLOSED")) {
-        System.out.println("Formatting error. Line should begin with CLOSED");
-      }
-
-      for (int j = 1; j < tokens.length; j++) // for node in open list
+      if(!tokens[0].equals("CLOSED")){ 
+      	System.out.println("Formatting error. Line should begin with CLOSED");
+	     		        }
+	        		        
+      for(int j=1;j<tokens.length; j++) // for node in open list
       {
-        path = tokens[j]; // get path R-SD
-        final String[] closedActions = path.split("-");
-        for (final String k : closedActions) { // for state in path
-          // System.out.println("action is:" + k);
-          final Matcher matcher = pattern.matcher(k);
-          if (matcher.matches() == false) {
-            System.out.println("Incorrect format for CLOSED list on line " + (i + 1));
-          }
+      	path=tokens[j]; //get path R-SD
+      	String closedActions[]=path.split("-");
+      	for (String k: closedActions){ // for state in path
+      		//System.out.println("action is:" + k);
+      		Matcher matcher = pattern.matcher(k);
+      		if(matcher.matches() == false)
+      			System.out.println("Incorrect format for CLOSED list on line " + (i+1));
 
-        }
+      	}
 
-      }
+		}
       // Increment i to start again
       i = i + 1;
 

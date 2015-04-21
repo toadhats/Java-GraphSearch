@@ -228,7 +228,7 @@ public class Graph
 
         }
         //When we get to here we should have processed all the nodes.
-        System.out.println("### All nodes have been processed! ###");
+        System.out.println("All nodes processed.");
         long endTime = System.currentTimeMillis();
         long processTime = (endTime - startTime);
         System.out.println("Found " + edgeCount + " edges. (" + processTime + "ms)");
