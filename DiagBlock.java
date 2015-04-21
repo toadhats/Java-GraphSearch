@@ -8,26 +8,24 @@ public class DiagBlock
 {
     // This is an extremely basic object
     private List<String> diagLines;
-    
+
     /**
      * Constructor for objects of class DiagBlock
      */
     public DiagBlock()
     {
-        // initialise instance variables
-        diagLines = new ArrayList<String>(3);
-        
+	// initialise instance variables
+	diagLines = new ArrayList<String>(3);
     }
-    
+
     /**
      * An example of a method - replace this comment with your own
+     * @param line 
      *
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y
      */
     public void addLine(String line)
     {
-        diagLines.add(line);
+	diagLines.add(line);
     }
 
 
@@ -38,15 +36,15 @@ public class DiagBlock
      */
     public String toString()
     {
-        // put your code here
-        StringBuilder sb = new StringBuilder();
-        sb.append(diagLines.get(0));
-        sb.append("\n");
-        sb.append(diagLines.get(1));
-        sb.append("\n");
-        sb.append(diagLines.get(2));
-        // do we need another newline here?
-        return sb.toString();
+	// put your code here
+	StringBuilder sb = new StringBuilder();
+	sb.append(diagLines.get(0));
+	sb.append("\n");
+	sb.append(diagLines.get(1));
+	sb.append("\n");
+	sb.append(diagLines.get(2));
+	// do we need another newline here?
+	return sb.toString();
     }
 
 }

@@ -15,28 +15,28 @@ public class Node
     private int coordX; // The x-coordinate of this node
     private int coordY; // The y-coordinate of this node
     // We need the coordinates to work out our heuristic, 
-    // and alsz`o to work out which directions will have a neighbour.
+    // and also to work out which directions will have a neighbour.
     /**
      * Constructor for objects of class Node
      */
     public Node(int x, int y, char type)
     {
-        // initialise instance variables
-        edges = new LinkedHashMap<String, Edge>();
-        cameFrom = ""; //No path yet, initialising this for safety.
-        //edges = //we can work out the edges basde on the coordinates. Somehow...
-        coordX = x;
-        coordY = y;
-        nodeType = type;
+	// initialise instance variables
+	edges = new LinkedHashMap<String, Edge>();
+	cameFrom = ""; //No path yet, initialising this for safety.
+	//edges = //we can work out the edges basde on the coordinates. Somehow...
+	coordX = x;
+	coordY = y;
+	nodeType = type;
 
-        if (nodeType == 'S') {
-            g = 0; // We'll put this here because we can, and it saves logic later
-            cameFrom = ""; // Nowhere.
-            path = "S";
-        }
-        else if (nodeType == 'G') {
-            h = 0;
-        }
+	if (nodeType == 'S') {
+	    g = 0; // We'll put this here because we can, and it saves logic later
+	    cameFrom = ""; // Nowhere.
+	    path = "S";
+	}
+	else if (nodeType == 'G') {
+	    h = 0;
+	}
     }
 
     /**
@@ -47,8 +47,8 @@ public class Node
      */
     public char getNodeType()
     {
-        // put your code here
-        return nodeType;
+	// put your code here
+	return nodeType;
     }
 
     /**
@@ -58,12 +58,12 @@ public class Node
      */
     public int getCost()
     {
-        // put your code here
-        if (g == 0 && nodeType != 'S') {
-            System.err.println("Can't get path cost to this node!");
-            System.err.println("Node has not been examined, or something has gone wrong.");
-        }
-        return g;
+	// put your code here
+	if (g == 0 && nodeType != 'S') {
+	    System.err.println("Can't get path cost to this node!");
+	    System.err.println("Node has not been examined, or something has gone wrong.");
+	}
+	return g;
     }
 
     /**
@@ -73,8 +73,8 @@ public class Node
      */
     public void setCost(int newCost)
     {
-        // put your code here
-        g = newCost;
+	// put your code here
+	g = newCost;
     }
 
     /**
@@ -84,8 +84,8 @@ public class Node
      */
     public int getRealCost()
     {
-        // put your code here
-        return realCost;
+	// put your code here
+	return realCost;
     }
 
     /**
@@ -95,7 +95,7 @@ public class Node
      */
     public void setRealCost(int newCost)
     {
-        realCost = newCost;
+	realCost = newCost;
     }
 
     /**
@@ -105,7 +105,7 @@ public class Node
      */
     public void setHeuristic(int heuristic)
     {
-        h = heuristic;
+	h = heuristic;
     }
 
     /**
@@ -115,12 +115,12 @@ public class Node
      */
     public int getHeuristic()
     {
-        // put your code here
-        if (h == 0 && nodeType != 'G') {
-            System.err.println("Can't get heuristic for this node!");
-            System.err.println("Node has not been examined, or something has gone wrong.");
-        }
-        return h;
+	// put your code here
+	if (h == 0 && nodeType != 'G') {
+	    System.err.println("Can't get heuristic for this node!");
+	    System.err.println("Node has not been examined, or something has gone wrong.");
+	}
+	return h;
     }
 
     /**
@@ -131,8 +131,8 @@ public class Node
      */
     public int getFn()
     {
-        // put your code here
-        return g + h;
+	// put your code here
+	return g + h;
     }
 
     /**
@@ -144,8 +144,8 @@ public class Node
      */
     public String getCoords()
     {
-        String coords = coordX + "," + coordY;
-        return coords;
+	String coords = coordX + "," + coordY;
+	return coords;
     }
 
     /**
@@ -155,8 +155,8 @@ public class Node
      */
     public int getX()
     {
-        // put your code here
-        return coordX;
+	// put your code here
+	return coordX;
     }
 
     /**
@@ -166,8 +166,8 @@ public class Node
      */
     public int getY()
     {
-        // put your code here
-        return coordY;
+	// put your code here
+	return coordY;
     }
 
     /**
@@ -177,7 +177,7 @@ public class Node
      */
     public void cameFrom(String parent)
     {
-        cameFrom = parent;
+	cameFrom = parent;
     }
 
     /**
@@ -188,8 +188,8 @@ public class Node
      */
     public void setPath(String newPath)
     {
-        // put your code here
-        path = newPath;
+	// put your code here
+	path = newPath;
     }
 
     /**
@@ -200,11 +200,11 @@ public class Node
      */
     public String getPath()
     {
-        // put your code here
-        return path;
+	// put your code here
+	return path;
     }
 
-    
+
     /**
      * Gets the node we used to get to this one.
      *
@@ -212,8 +212,8 @@ public class Node
      */
     public String getCameFrom()
     {
-        // put your code here
-        return cameFrom;
+	// put your code here
+	return cameFrom;
     }
 
     /**
@@ -223,20 +223,20 @@ public class Node
      */
     public LinkedHashMap<String, Edge> getEdges()
     {
-        // put your code here
-        return edges;
+	// put your code here
+	return edges;
     }
 
-    
+
     /**
      * Adds an Edge to a Node object
      *
      */
     public void addEdge(Edge newEdge)
     {
-        // There are probably many better ways to do this.
-        String newDirection = newEdge.getDirection();
-        edges.put(newDirection, newEdge);
+	// There are probably many better ways to do this.
+	String newDirection = newEdge.getDirection();
+	edges.put(newDirection, newEdge);
 
     }
 
@@ -248,11 +248,11 @@ public class Node
      */
     public void removeEdge(String k)
     {
-        // put your code here
-        edges.remove(k);
+	// put your code here
+	edges.remove(k);
     }
 
-    
+
     // Inner classes seem to screw up BlueJ formatting, 
     // so I put them down here so I don't have to look at them too much.
 
@@ -260,22 +260,22 @@ public class Node
      * This is the Comparator used when sorting by path cost.
      */
     public static Comparator<Node> GComparator = new Comparator<Node>() 
-        {
-            public int compare(Node n1, Node n2)
-            {
-                return n1.getCost() - n2.getCost();
-            }
-        };
+	    {
+	public int compare(Node n1, Node n2)
+	{
+	    return n1.getCost() - n2.getCost();
+	}
+	    };
 
-    /**
-     * This is the Comparator used when sorting by f (path cost plus heuristic) used for A/A*.
-     */
-    public static Comparator<Node> FComparator = new Comparator<Node>() 
-        {
-            public int compare(Node n1, Node n2)
-            {
-                return n1.getFn() - n2.getFn();
-            }
-        };
+	    /**
+	     * This is the Comparator used when sorting by f (path cost plus heuristic) used for A/A*.
+	     */
+	    public static Comparator<Node> FComparator = new Comparator<Node>() 
+		    {
+		public int compare(Node n1, Node n2)
+		{
+		    return n1.getFn() - n2.getFn();
+		}
+		    };
 
 }
